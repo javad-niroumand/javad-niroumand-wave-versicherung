@@ -11,89 +11,121 @@
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --white:#FFFFFF;
-    --black:#000000;
-    --purple:#451DC7;      /* primary purple */
-    --green:#04F06A;       /* primary green  */
-    --mint:#CAFEE0;        /* light mint     */
-    --deep:#250F6B;        /* dark purple    */
-    --muted:#4a3f78;
+    --white:#FFFFFF; --black:#000000;
+    --purple:#451DC7; --green:#04F06A; --mint:#CAFEE0; --deep:#250F6B;
+    --muted:#4a3f78; --end:#FF453A;
     --font-display:"League Spartan",system-ui,sans-serif;
     --font-text:"Figtree",system-ui,sans-serif;
+    --ease:cubic-bezier(.32,.72,0,1);
   }
   *{box-sizing:border-box;margin:0}
   html,body{height:100%}
   body{font-family:var(--font-text);font-size:1.0625rem;line-height:1.5;color:var(--black);background:var(--purple);-webkit-font-smoothing:antialiased}
+  button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+  button:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 
-  /* ---------- Page: two flat colour fields ---------- */
+  /* ---------- Page ---------- */
   .page{min-height:100svh;display:grid;grid-template-columns:repeat(12,1fr)}
   .field-left{grid-column:1 / span 7;background:var(--purple);color:var(--white);padding:clamp(24px,4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:48px}
   .field-right{grid-column:8 / span 5;background:var(--mint);display:grid;place-items:center;padding:32px 24px}
-
   .brand{display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-weight:700;font-size:1.75rem;letter-spacing:-.04em;line-height:1}
   .brand .tile{width:52px;height:52px;border-radius:14px;background:var(--white);display:grid;place-items:center;flex:none}
   .brand img{width:34px;height:auto;display:block}
-
   h1{font-family:var(--font-display);font-weight:700;font-size:clamp(3rem,8vw,8rem);line-height:.88;letter-spacing:-.04em}
   h1 em{font-style:normal;color:var(--green)}
   .lead{max-width:34ch;font-size:clamp(1.125rem,1rem + .5vw,1.4rem);margin-top:28px}
-
   .legend{display:flex;gap:28px;flex-wrap:wrap;font-weight:600;font-size:.95rem}
   .legend span{display:inline-flex;align-items:center;gap:10px}
   .legend i{width:16px;height:16px;border-radius:50%;display:inline-block;outline:2px solid var(--white)}
-  .legend .a{background:var(--deep)}
-  .legend .u{background:var(--green)}
+  .legend .a{background:var(--deep)} .legend .u{background:var(--green)}
 
   /* ---------- iPhone ---------- */
   .phone{position:relative;width:min(390px,100%);aspect-ratio:390/800;max-height:calc(100svh - 48px);background:#111;border-radius:58px;padding:12px;
-         box-shadow:inset 0 0 0 2px #444, 0 0 0 2px #1b1b1b, 0 40px 70px -24px rgba(37,15,107,.55)}
-  /* hardware buttons */
+         box-shadow:inset 0 0 0 2px #444,0 0 0 2px #1b1b1b,0 40px 70px -24px rgba(37,15,107,.55)}
   .phone::before{content:"";position:absolute;left:-4px;top:150px;width:4px;height:58px;background:#2a2a2a;border-radius:3px 0 0 3px;box-shadow:0 74px 0 #2a2a2a}
   .phone::after{content:"";position:absolute;right:-4px;top:200px;width:4px;height:96px;background:#2a2a2a;border-radius:0 3px 3px 0}
-  .screen{position:relative;width:100%;height:100%;background:var(--white);border-radius:46px;overflow:hidden;display:flex;flex-direction:column;
-          transform:translateZ(0);contain:layout paint}
-  .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:112px;height:32px;background:#000;border-radius:20px;z-index:5}
-  .statusbar{height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 34px;font-weight:600;font-size:.95rem;background:var(--deep);color:var(--white)}
+  .screen{position:relative;width:100%;height:100%;border-radius:46px;overflow:hidden;background:var(--purple);transform:translateZ(0);isolation:isolate}
+  .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:112px;height:32px;background:#000;border-radius:20px;z-index:30}
+  .statusbar{position:absolute;inset:0 0 auto 0;height:56px;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 34px;font-weight:600;font-size:.95rem;color:var(--white);pointer-events:none}
   .statusbar .icons{display:flex;gap:6px;align-items:center}
-  .statusbar svg{display:block}
+  .home-bar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:128px;height:5px;border-radius:5px;background:var(--white);z-index:30;opacity:.9}
 
-  .app-head{flex:none;background:var(--deep);color:var(--white);padding:10px 18px 18px;display:flex;align-items:center;gap:12px}
-  .avatar{width:46px;height:46px;border-radius:50%;background:var(--white);display:grid;place-items:center;flex:none}
-  .avatar img{width:26px;height:auto;display:block}
-  .app-head h2{font-family:var(--font-display);font-weight:700;font-size:1.35rem;letter-spacing:-.03em;line-height:1}
-  .app-head p{font-size:.8125rem;color:var(--mint)}
-  .live{margin-left:auto;font-size:.75rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:99px;background:var(--purple);color:var(--white);white-space:nowrap}
-  .live::before{content:"";width:8px;height:8px;border-radius:50%;background:#b9b0e6}
-  .phone[data-state="live"] .live::before{background:var(--green);animation:pulse 1.4s ease-in-out infinite}
-  .phone[data-state="connecting"] .live::before{background:#FFD24A}
-  @keyframes pulse{50%{opacity:.35}}
+  /* views */
+  .view{position:absolute;inset:0;transition:transform .45s var(--ease),opacity .35s ease,border-radius .45s var(--ease)}
 
-  /* ---------- Transcript ---------- */
-  .transcript{flex:1;min-height:0;overflow-y:auto;padding:18px 16px 12px;display:flex;flex-direction:column;gap:12px;background:var(--white);scroll-behavior:smooth}
-  .empty{margin:auto;text-align:center;color:var(--muted);max-width:25ch;font-size:.95rem}
-  .empty strong{display:block;font-family:var(--font-display);font-size:1.6rem;letter-spacing:-.03em;color:var(--deep);line-height:1;margin-bottom:8px}
+  /* ---------- Home screen ---------- */
+  .home{background:var(--purple);overflow:hidden;padding:64px 18px 0;display:flex;flex-direction:column;color:var(--white)}
+  .wp{position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .wp .c1{position:absolute;width:420px;height:420px;border-radius:50%;background:var(--deep);left:-170px;bottom:-130px}
+  .wp .c2{position:absolute;width:150px;height:150px;border-radius:50%;background:var(--green);right:-40px;top:250px}
+  .wp .c3{position:absolute;width:90px;height:90px;border-radius:50%;background:var(--mint);right:78px;bottom:140px}
+  .date{font-weight:600;font-size:.95rem;opacity:.95;text-align:center}
+  .time{font-family:var(--font-display);font-weight:700;font-size:4.2rem;letter-spacing:-.05em;line-height:.9;text-align:center;margin:2px 0 18px}
+
+  .widget{background:var(--white);color:var(--black);border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 30px -14px rgba(0,0,0,.45)}
+  .widget .row{display:flex;align-items:center;gap:12px}
+  .widget .logo{width:44px;height:44px;border-radius:12px;background:var(--mint);display:grid;place-items:center;flex:none}
+  .widget .logo img{width:26px;height:auto;display:block}
+  .widget h2{font-family:var(--font-display);font-weight:700;font-size:1.3rem;letter-spacing:-.03em;line-height:1;color:var(--deep)}
+  .widget small{display:block;font-size:.8rem;color:var(--muted)}
+  .widget p{font-size:.92rem;line-height:1.35}
+  .callbtn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;border-radius:99px;background:var(--green);color:var(--black);font-weight:600;font-size:1rem;transition:transform .15s ease,filter .15s ease}
+  .callbtn:hover{filter:brightness(.96)} .callbtn:active{transform:scale(.97)}
+  .callbtn[disabled]{opacity:.55;cursor:progress}
+
+  .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 8px;margin-top:22px}
+  .app{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.7rem;font-weight:600;text-align:center;cursor:default}
+  .app i{width:56px;height:56px;border-radius:15px;display:grid;place-items:center}
+  .app svg{width:28px;height:28px}
+  .a1{background:var(--white);color:var(--purple)} .a2{background:var(--mint);color:var(--deep)} .a3{background:var(--green);color:var(--black)} .a4{background:var(--deep);color:var(--white)}
+
+  .dock{position:absolute;left:12px;right:12px;bottom:26px;height:84px;border-radius:30px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:space-around;padding:0 10px}
+  .dock .ico{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;transition:transform .15s ease}
+  .dock button.ico:active{transform:scale(.92)}
+  .dock .ico[disabled]{opacity:.6;cursor:progress}
+  .dock svg{width:30px;height:30px}
+  .ico.phone{background:var(--green);color:var(--black)} .ico.ava{background:var(--white)} .ico.ava img{width:30px}
+  .ico.chat{background:var(--mint);color:var(--deep);cursor:default} .ico.web{background:var(--deep);color:var(--white);cursor:default}
+
+  /* ---------- Call screen ---------- */
+  .call{background:var(--deep);color:var(--white);display:flex;flex-direction:column;padding-top:56px;transform:scale(.9) translateY(8%);opacity:0;pointer-events:none;visibility:hidden;border-radius:46px}
+  .call-head{flex:none;display:flex;align-items:center;gap:14px;padding:10px 20px 16px}
+  .avatar{position:relative;width:56px;height:56px;border-radius:50%;background:var(--white);display:grid;place-items:center;flex:none}
+  .avatar img{width:32px;height:auto;display:block}
+  .avatar::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--green);opacity:0}
+  .screen[data-state="live"] .avatar::after{animation:ring 1.8s ease-out infinite}
+  @keyframes ring{0%{opacity:.9;transform:scale(.9)}100%{opacity:0;transform:scale(1.25)}}
+  .call-head h2{font-family:var(--font-display);font-weight:700;font-size:1.7rem;letter-spacing:-.03em;line-height:1}
+  .call-head p{font-size:.9rem;color:var(--mint);font-variant-numeric:tabular-nums}
+
+  .transcript{flex:1;min-height:0;overflow-y:auto;padding:16px 16px 12px;display:flex;flex-direction:column;gap:12px;background:var(--white);border-radius:30px 30px 0 0;scroll-behavior:smooth}
+  .empty{margin:auto;text-align:center;color:var(--muted);max-width:24ch;font-size:.95rem}
+  .empty strong{display:block;font-family:var(--font-display);font-size:1.5rem;letter-spacing:-.03em;color:var(--deep);line-height:1;margin-bottom:6px}
   .msg{max-width:84%;display:flex;flex-direction:column;gap:4px;animation:in .25s ease-out both}
-  .msg .who{font-size:.75rem;font-weight:600;letter-spacing:.02em;color:var(--muted)}
+  .msg .who{font-size:.75rem;font-weight:600;color:var(--muted)}
   .msg .bubble{padding:10px 14px;border-radius:20px;font-size:.96rem;line-height:1.4;overflow-wrap:anywhere}
-  .msg.agent{align-self:flex-start}
-  .msg.agent .bubble{background:var(--deep);color:var(--white);border-bottom-left-radius:6px}
-  .msg.user{align-self:flex-end;align-items:flex-end}
-  .msg.user .bubble{background:var(--green);color:var(--black);border-bottom-right-radius:6px}
+  .msg.agent{align-self:flex-start} .msg.agent .bubble{background:var(--deep);color:var(--white);border-bottom-left-radius:6px}
+  .msg.user{align-self:flex-end;align-items:flex-end} .msg.user .bubble{background:var(--green);color:var(--black);border-bottom-right-radius:6px}
   @keyframes in{from{opacity:0;transform:translateY(6px)}}
-  @media (prefers-reduced-motion:reduce){.msg{animation:none}.live::before{animation:none!important}.transcript{scroll-behavior:auto}}
 
-  /* ---------- Call dock (Cognigy widget is moved in here) ---------- */
-  .dock{flex:none;background:var(--mint);padding:14px 16px 26px;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:120px;justify-content:center;position:relative}
-  .dock-hint{font-size:.8125rem;color:var(--deep);text-align:center;font-weight:600;margin-top:20px}
-  .home-bar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:128px;height:5px;border-radius:5px;background:var(--black)}
+  .controls{flex:none;background:var(--white);display:flex;justify-content:center;align-items:flex-start;gap:34px;padding:10px 20px 38px}
+  .ctl{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.75rem;font-weight:600;color:var(--deep)}
+  .ctl b{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;transition:transform .15s ease}
+  .ctl:active b{transform:scale(.94)}
+  .ctl svg{width:28px;height:28px}
+  .ctl.mute b{background:var(--mint);color:var(--deep)}
+  .ctl.mute[aria-pressed="true"] b{background:var(--deep);color:var(--white)}
+  .ctl.end b{background:var(--end);color:var(--white)}
 
-  .dock [class*="widget_container"],
-  .dock [class*="widget_outer_wrapper"],
-  .dock [class*="widget_wrapper"]{position:static!important;inset:auto!important;transform:none!important;margin:0!important;width:100%!important;max-width:100%!important;box-shadow:none!important;background:transparent!important}
-  .dock button:focus-visible{outline:3px solid var(--purple);outline-offset:3px}
-  .phone.own-transcript .dock [class*="transcript"]{display:none!important}
+  /* open / close transitions */
+  .screen.in-call .home{transform:scale(1.08);opacity:0;pointer-events:none;visibility:hidden;transition:transform .45s var(--ease),opacity .3s ease,visibility 0s .45s}
+  .screen.in-call .call{transform:none;opacity:1;pointer-events:auto;visibility:visible}
+  .screen.in-call .home-bar{background:var(--deep)}
 
-  /* ---------- Mobile ---------- */
+  /* the Cognigy widget stays alive but invisible; our UI drives it */
+  .widget-host{position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.transcript{scroll-behavior:auto}}
   @media (max-width:900px){
     .page{display:block}
     .field-left{padding:24px 20px 40px;gap:36px}
@@ -106,25 +138,19 @@
 <body>
 <main class="page">
   <section class="field-left" aria-label="wave-versicherung">
-    <div class="brand">
-      <span class="tile"><img src="logo.png" alt=""></span>
-      <span>wave-versicherung</span>
-    </div>
-
+    <div class="brand"><span class="tile"><img src="logo.png" alt=""></span><span>wave-versicherung</span></div>
     <div>
       <h1>Einfach<br>sprechen.<br><em>AVA hört zu.</em></h1>
-      <p class="lead">Schaden melden, Vertrag prüfen, Fragen klären: ein Klick, und AVA ist am Apparat. Direkt im Browser, ohne Warteschleife.</p>
+      <p class="lead">Schaden melden, Vertrag prüfen, Fragen klären: ein Tipp, und AVA ist am Apparat. Direkt im Browser, ohne Warteschleife.</p>
     </div>
-
     <div class="legend" aria-label="Legende der Transkription">
-      <span><i class="a"></i>AVA (Agentin)</span>
-      <span><i class="u"></i>Sie</span>
+      <span><i class="a"></i>AVA (Agentin)</span><span><i class="u"></i>Sie</span>
     </div>
   </section>
 
   <section class="field-right" aria-label="Telefonvorschau">
-    <div class="phone" id="phone" data-state="idle">
-      <div class="screen">
+    <div class="phone" id="phone">
+      <div class="screen" id="screen" data-state="idle">
         <div class="island" aria-hidden="true"></div>
         <div class="statusbar" aria-hidden="true">
           <span id="clock">9:41</span>
@@ -135,59 +161,130 @@
           </span>
         </div>
 
-        <header class="app-head">
-          <div class="avatar" aria-hidden="true"><img src="logo.png" alt=""></div>
-          <div>
-            <h2>AVA</h2>
-            <p>wave-versicherung · Service</p>
-          </div>
-          <span class="live" id="stateLabel" role="status" aria-live="polite">Bereit</span>
-        </header>
+        <!-- HOME -->
+        <div class="view home" id="home">
+          <div class="wp" aria-hidden="true"><span class="c1"></span><span class="c2"></span><span class="c3"></span></div>
+          <div class="date" id="date">Dienstag, 10. November</div>
+          <div class="time" id="bigtime">9:41</div>
 
-        <div class="transcript" id="transcript" role="log" aria-live="polite" aria-label="Live-Transkription">
-          <div class="empty" id="empty"><strong>Tippen Sie auf den Anruf-Button.</strong>Das Gespräch erscheint hier live. AVA in Dunkelviolett, Sie in Grün.</div>
+          <div class="widget">
+            <div class="row">
+              <span class="logo"><img src="logo.png" alt=""></span>
+              <div><h2>AVA</h2><small>Sprachassistentin · wave-versicherung</small></div>
+            </div>
+            <p>Schaden melden, Vertrag prüfen oder Fragen klären. AVA hilft sofort.</p>
+            <button class="callbtn" id="callBtn" type="button" disabled>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.58a1 1 0 01-.25 1z"/></svg>
+              <span id="callLabel">Wird geladen …</span>
+            </button>
+          </div>
+
+          <div class="apps" aria-hidden="true">
+            <div class="app"><i class="a1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></i>Verträge</div>
+            <div class="app"><i class="a2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.5 6 10a6 6 0 01-12 0c0-3.5 3-6 6-10z"/></svg></i>Schaden</div>
+            <div class="app"><i class="a3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></i>Dokumente</div>
+            <div class="app"><i class="a4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></i>Profil</div>
+          </div>
+
+          <div class="dock">
+            <button class="ico phone" id="dockPhone" type="button" aria-label="AVA anrufen" disabled>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.58a1 1 0 01-.25 1z"/></svg>
+            </button>
+            <button class="ico ava" id="dockAva" type="button" aria-label="AVA öffnen" disabled><img src="logo.png" alt=""></button>
+            <span class="ico chat" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg></span>
+            <span class="ico web" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>
+          </div>
         </div>
 
-        <footer class="dock" id="dock">
-          <p class="dock-hint" id="hint">Mikrofon-Freigabe erforderlich</p>
-          <div class="home-bar" aria-hidden="true"></div>
-        </footer>
+        <!-- CALL / CONVERSATION -->
+        <div class="view call" id="call" aria-hidden="true">
+          <div class="call-head">
+            <div class="avatar" aria-hidden="true"><img src="logo.png" alt=""></div>
+            <div>
+              <h2>AVA</h2>
+              <p id="callStatus" role="status" aria-live="polite">Verbinde …</p>
+            </div>
+          </div>
+          <div class="transcript" id="transcript" role="log" aria-live="polite" aria-label="Live-Transkription">
+            <div class="empty" id="empty"><strong>AVA hört zu.</strong>Sprechen Sie einfach los. Das Gespräch erscheint hier live.</div>
+          </div>
+          <div class="controls">
+            <button class="ctl mute" id="muteBtn" type="button" aria-pressed="false">
+              <b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></b>
+              <span id="muteLabel">Stumm</span>
+            </button>
+            <button class="ctl end" id="endBtn" type="button">
+              <b><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="transform:rotate(135deg)"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.58a1 1 0 01-.25 1z"/></svg></b>
+              Auflegen
+            </button>
+          </div>
+        </div>
+
+        <div class="home-bar" aria-hidden="true"></div>
       </div>
     </div>
   </section>
 </main>
 
-<!-- Cognigy Click-to-Call widget -->
+<div class="widget-host" id="widgetHost" aria-hidden="true"></div>
+
+<!-- Cognigy Click-to-Call widget (runs hidden; the iPhone UI drives it) -->
 <script src="https://github.com/Cognigy/click-to-call-widget/releases/latest/download/webRTCWidget.js"></script>
 <script>
 (function(){
   var ENDPOINT = "https://endpoint-trial.cognigy.ai/8e258fbd5273a8a5fa6e0d7eccd2f8b0fc3e594bdcb0ee67d1a29861ef0a2df8";
+  var DEMO = /demo/.test(location.hash);
 
-  var phone = document.getElementById("phone");
-  var log = document.getElementById("transcript");
-  var empty = document.getElementById("empty");
-  var dock = document.getElementById("dock");
-  var hint = document.getElementById("hint");
-  var stateLabel = document.getElementById("stateLabel");
+  var $ = function(id){ return document.getElementById(id); };
+  var screen = $("screen"), log = $("transcript"), empty = $("empty");
+  var callBtn = $("callBtn"), callLabel = $("callLabel"), dockPhone = $("dockPhone"), dockAva = $("dockAva");
+  var callStatus = $("callStatus"), muteBtn = $("muteBtn"), muteLabel = $("muteLabel"), endBtn = $("endBtn");
+  var host = $("widgetHost");
 
-  function tick(){ var d=new Date(); document.getElementById("clock").textContent = d.getHours()+":"+String(d.getMinutes()).padStart(2,"0"); }
-  tick(); setInterval(tick, 30000);
+  /* ----- clock & date ----- */
+  function tick(){
+    var d = new Date(), t = d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");
+    $("clock").textContent = t; $("bigtime").textContent = t;
+    $("date").textContent = d.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"});
+  }
+  tick(); setInterval(tick, 15000);
 
-  function setState(s, label){ phone.dataset.state = s; stateLabel.textContent = label; }
+  /* ----- state ----- */
+  var session = null, timer = null, startedAt = 0, muted = false, ready = DEMO, inCall = false, endedTimer = null;
 
+  function setState(s){ screen.dataset.state = s; }
+  function setReady(){
+    ready = true;
+    [callBtn,dockPhone,dockAva].forEach(function(b){ b.disabled = false; });
+    callLabel.textContent = "AVA anrufen";
+  }
+  if(DEMO) setTimeout(setReady, 50);
+
+  function fmt(s){ return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); }
+  function startTimer(){
+    clearInterval(timer); startedAt = Date.now();
+    callStatus.textContent = "00:00";
+    timer = setInterval(function(){ callStatus.textContent = fmt(Math.round((Date.now()-startedAt)/1000)); }, 1000);
+  }
+
+  /* ----- transcript ----- */
   var last = null;
+  function resetTranscript(){
+    log.innerHTML = ""; last = null;
+    empty = document.createElement("div"); empty.className = "empty";
+    empty.innerHTML = "<strong>AVA hört zu.</strong>Sprechen Sie einfach los. Das Gespräch erscheint hier live.";
+    log.appendChild(empty);
+  }
   function addMessage(role, text){
     text = (text||"").trim(); if(!text) return;
     if(empty){ empty.remove(); empty = null; }
-    phone.classList.add("own-transcript");
     if(last && last.role === role && Date.now() - last.t < 4000){
       last.bubble.textContent += " " + text; last.t = Date.now();
     } else {
       var m = document.createElement("div"); m.className = "msg " + role;
       var w = document.createElement("span"); w.className = "who"; w.textContent = role === "agent" ? "AVA" : "Sie";
       var b = document.createElement("div"); b.className = "bubble"; b.textContent = text;
-      m.append(w,b); log.appendChild(m);
-      last = {role:role, bubble:b, t:Date.now()};
+      m.append(w,b); log.appendChild(m); last = {role:role, bubble:b, t:Date.now()};
     }
     log.scrollTop = log.scrollHeight;
   }
@@ -204,58 +301,118 @@
   function handleTranscription(t){
     if(!t) return;
     var role = (t.originator === "user") ? "user" : "agent";
-    var msgs = Array.isArray(t.messages) ? t.messages : [t];
-    msgs.forEach(function(m){ addMessage(role, m && (m.text || m.transcript || (typeof m === "string" ? m : ""))); });
-  }
-
-  function adoptWidget(){
-    var els = document.querySelectorAll("[class*='widget_container'], [class*='widget_wrapper']");
-    els.forEach(function(el){
-      if(dock.contains(el)) return;
-      var top = el; while(top.parentElement && top.parentElement !== document.body && top.parentElement !== dock) top = top.parentElement;
-      dock.insertBefore(top, hint);
+    (Array.isArray(t.messages) ? t.messages : [t]).forEach(function(m){
+      addMessage(role, m && (m.text || m.transcript || (typeof m === "string" ? m : "")));
     });
   }
+
+  /* ----- view switching ----- */
+  function showCall(){
+    inCall = true; clearTimeout(endedTimer);
+    resetTranscript(); setMuted(false);
+    callStatus.textContent = "Verbinde …"; setState("connecting");
+    screen.classList.add("in-call");
+    $("call").setAttribute("aria-hidden","false");
+    setTimeout(function(){ endBtn.focus({preventScroll:true}); }, 480);
+  }
+  function showHome(){
+    inCall = false; session = null; clearInterval(timer); setState("idle");
+    screen.classList.remove("in-call");
+    $("call").setAttribute("aria-hidden","true");
+    setTimeout(function(){ dockPhone.focus({preventScroll:true}); }, 480);
+  }
+  function callEnded(){
+    if(!inCall) return;
+    clearInterval(timer); setState("ended");
+    callStatus.textContent = "Gespräch beendet";
+    clearTimeout(endedTimer); endedTimer = setTimeout(showHome, 1800);
+  }
+
+  /* ----- widget handling ----- */
+  function adoptWidget(){
+    document.querySelectorAll("[class*='widget_container'], [class*='widget_wrapper']").forEach(function(el){
+      if(host.contains(el)) return;
+      var top = el; while(top.parentElement && top.parentElement !== document.body && top.parentElement !== host) top = top.parentElement;
+      host.appendChild(top);
+    });
+  }
+  function widgetButton(){ return host.querySelector("button"); }
   new MutationObserver(adoptWidget).observe(document.body, {childList:true});
 
+  function startCall(){
+    if(!ready || inCall) return;
+    showCall();
+    if(DEMO){ runDemo(); return; }
+    var b = widgetButton();
+    if(b){ b.click(); }
+    else { callStatus.textContent = "Widget nicht bereit"; setTimeout(showHome, 1500); }
+  }
+  function endCall(){
+    if(DEMO){ clearInterval(timer); callEnded(); return; }
+    try{
+      if(session && typeof session.terminate === "function"){ session.terminate(); return; }
+    }catch(e){}
+    var b = widgetButton(); if(b) b.click();
+    callEnded();
+  }
+  function setMuted(m){
+    muted = m; muteBtn.setAttribute("aria-pressed", String(m));
+    muteLabel.textContent = m ? "Stumm aus" : "Stumm";
+  }
+  function toggleMute(){
+    var next = !muted;
+    try{
+      if(session){ next ? session.mute({audio:true}) : session.unmute({audio:true}); }
+    }catch(e){}
+    setMuted(next);
+  }
+
+  [callBtn,dockPhone,dockAva].forEach(function(b){ b.addEventListener("click", startCall); });
+  endBtn.addEventListener("click", endCall);
+  muteBtn.addEventListener("click", toggleMute);
+
+  /* ----- init Cognigy widget ----- */
   addEventListener("load", function(){
-    if(typeof window.initWebRTCWidget !== "function"){
-      hint.textContent = "Widget konnte nicht geladen werden. Bitte Seite neu laden.";
-      setState("idle","Offline");
-      return;
-    }
+    if(DEMO) return;
+    if(typeof window.initWebRTCWidget !== "function"){ callLabel.textContent = "Nicht verfügbar"; return; }
     var p = window.initWebRTCWidget(ENDPOINT);
-    setTimeout(adoptWidget, 300); setTimeout(adoptWidget, 1200);
+    var tries = 0, poll = setInterval(function(){
+      adoptWidget();
+      if(widgetButton()){ clearInterval(poll); setReady(); }
+      else if(++tries > 60){ clearInterval(poll); callLabel.textContent = "Nicht verfügbar"; }
+    }, 250);
     if(p && typeof p.then === "function"){
       p.then(function(widget){
         adoptWidget();
         if(!widget || typeof widget.on !== "function") return;
-        widget.on("newRTCSession", function(session){
-          setState("connecting","Verbinde …");
-          var live = function(){ setState("live","Live"); hint.textContent = "Gespräch läuft"; };
-          session.on("accepted", live); session.on("confirmed", live);
-          session.on("newInfo", function(ev){
+        widget.on("newRTCSession", function(s){
+          session = s;
+          var live = function(){ setState("live"); startTimer(); };
+          s.on("accepted", live); s.on("confirmed", live);
+          s.on("newInfo", function(ev){
             if(ev.originator !== "remote") return;
             var info = ev.info || ev;
             var body = info && (info.body !== undefined ? info.body : info.request && info.request.body);
             if(body === undefined && typeof ev.body !== "undefined") body = ev.body;
             handleTranscription(findTranscription(body, 0));
           });
-          var end = function(){ setState("idle","Beendet"); hint.textContent = "Gespräch beendet. Erneut anrufen?"; };
-          session.on("ended", end); session.on("terminated", end); session.on("failed", end);
+          var done = function(){ callEnded(); };
+          s.on("ended", done); s.on("terminated", done);
+          s.on("failed", function(){ if(inCall){ callStatus.textContent = "Verbindung fehlgeschlagen"; clearInterval(timer); setState("ended"); clearTimeout(endedTimer); endedTimer = setTimeout(showHome, 2200); } });
+          if(!inCall) showCall();   // e.g. call started from the widget itself
         });
-      }).catch(function(e){ console.error("Widget init failed", e); hint.textContent = "Verbindung zum Widget fehlgeschlagen."; });
+      }).catch(function(e){ console.error("Widget init failed", e); callLabel.textContent = "Nicht verfügbar"; });
     }
   });
 
-  /* add #demo to the URL to preview a sample conversation (no call is made) */
-  if(/demo/.test(location.hash)){
+  /* ----- #demo: simulated conversation for design review (no call is made) ----- */
+  function runDemo(){
+    setTimeout(function(){ setState("live"); startTimer(); }, 700);
     [["agent","Guten Tag, hier ist AVA von wave-versicherung. Wie kann ich helfen?"],
      ["user","Hallo, ich möchte einen Wasserschaden in meiner Wohnung melden."],
      ["agent","Das tut mir leid. Ist die Situation aktuell sicher, und wann ist der Schaden aufgetreten?"],
      ["user","Ja, alles sicher. Es ist heute Morgen passiert."]
-    ].forEach(function(d,i){ setTimeout(function(){ last=null; addMessage(d[0],d[1]); }, 400+i*500); });
-    setState("live","Demo");
+    ].forEach(function(d,i){ setTimeout(function(){ if(!inCall) return; last=null; addMessage(d[0],d[1]); }, 1200+i*1400); });
   }
 })();
 </script>
