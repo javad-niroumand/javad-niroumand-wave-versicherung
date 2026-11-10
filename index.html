@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>wave-versicherung · AVA Click to Call</title>
+<meta name="description" content="Sprechen Sie direkt mit AVA, der Sprachassistentin von wave-versicherung.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --black:#000000;
+    --purple:#451DC7;      /* primary purple */
+    --green:#04F06A;       /* primary green  */
+    --mint:#CAFEE0;        /* light mint     */
+    --deep:#250F6B;        /* dark purple    */
+    --muted:#4a3f78;
+    --font-display:"League Spartan",system-ui,sans-serif;
+    --font-text:"Figtree",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{font-family:var(--font-text);font-size:1.0625rem;line-height:1.5;color:var(--black);background:var(--purple);-webkit-font-smoothing:antialiased}
+
+  /* ---------- Page: two flat colour fields ---------- */
+  .page{min-height:100svh;display:grid;grid-template-columns:repeat(12,1fr)}
+  .field-left{grid-column:1 / span 7;background:var(--purple);color:var(--white);padding:clamp(24px,4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:48px}
+  .field-right{grid-column:8 / span 5;background:var(--mint);display:grid;place-items:center;padding:32px 24px}
+
+  .brand{display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-weight:700;font-size:1.75rem;letter-spacing:-.04em;line-height:1}
+  .brand .tile{width:52px;height:52px;border-radius:14px;background:var(--white);display:grid;place-items:center;flex:none}
+  .brand img{width:34px;height:auto;display:block}
+
+  h1{font-family:var(--font-display);font-weight:700;font-size:clamp(3rem,8vw,8rem);line-height:.88;letter-spacing:-.04em}
+  h1 em{font-style:normal;color:var(--green)}
+  .lead{max-width:34ch;font-size:clamp(1.125rem,1rem + .5vw,1.4rem);margin-top:28px}
+
+  .legend{display:flex;gap:28px;flex-wrap:wrap;font-weight:600;font-size:.95rem}
+  .legend span{display:inline-flex;align-items:center;gap:10px}
+  .legend i{width:16px;height:16px;border-radius:50%;display:inline-block;outline:2px solid var(--white)}
+  .legend .a{background:var(--deep)}
+  .legend .u{background:var(--green)}
+
+  /* ---------- iPhone ---------- */
+  .phone{position:relative;width:min(390px,100%);aspect-ratio:390/800;max-height:calc(100svh - 48px);background:#111;border-radius:58px;padding:12px;
+         box-shadow:inset 0 0 0 2px #444, 0 0 0 2px #1b1b1b, 0 40px 70px -24px rgba(37,15,107,.55)}
+  /* hardware buttons */
+  .phone::before{content:"";position:absolute;left:-4px;top:150px;width:4px;height:58px;background:#2a2a2a;border-radius:3px 0 0 3px;box-shadow:0 74px 0 #2a2a2a}
+  .phone::after{content:"";position:absolute;right:-4px;top:200px;width:4px;height:96px;background:#2a2a2a;border-radius:0 3px 3px 0}
+  .screen{position:relative;width:100%;height:100%;background:var(--white);border-radius:46px;overflow:hidden;display:flex;flex-direction:column;
+          transform:translateZ(0);contain:layout paint}
+  .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:112px;height:32px;background:#000;border-radius:20px;z-index:5}
+  .statusbar{height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 34px;font-weight:600;font-size:.95rem;background:var(--deep);color:var(--white)}
+  .statusbar .icons{display:flex;gap:6px;align-items:center}
+  .statusbar svg{display:block}
+
+  .app-head{flex:none;background:var(--deep);color:var(--white);padding:10px 18px 18px;display:flex;align-items:center;gap:12px}
+  .avatar{width:46px;height:46px;border-radius:50%;background:var(--white);display:grid;place-items:center;flex:none}
+  .avatar img{width:26px;height:auto;display:block}
+  .app-head h2{font-family:var(--font-display);font-weight:700;font-size:1.35rem;letter-spacing:-.03em;line-height:1}
+  .app-head p{font-size:.8125rem;color:var(--mint)}
+  .live{margin-left:auto;font-size:.75rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:99px;background:var(--purple);color:var(--white);white-space:nowrap}
+  .live::before{content:"";width:8px;height:8px;border-radius:50%;background:#b9b0e6}
+  .phone[data-state="live"] .live::before{background:var(--green);animation:pulse 1.4s ease-in-out infinite}
+  .phone[data-state="connecting"] .live::before{background:#FFD24A}
+  @keyframes pulse{50%{opacity:.35}}
+
+  /* ---------- Transcript ---------- */
+  .transcript{flex:1;min-height:0;overflow-y:auto;padding:18px 16px 12px;display:flex;flex-direction:column;gap:12px;background:var(--white);scroll-behavior:smooth}
+  .empty{margin:auto;text-align:center;color:var(--muted);max-width:25ch;font-size:.95rem}
+  .empty strong{display:block;font-family:var(--font-display);font-size:1.6rem;letter-spacing:-.03em;color:var(--deep);line-height:1;margin-bottom:8px}
+  .msg{max-width:84%;display:flex;flex-direction:column;gap:4px;animation:in .25s ease-out both}
+  .msg .who{font-size:.75rem;font-weight:600;letter-spacing:.02em;color:var(--muted)}
+  .msg .bubble{padding:10px 14px;border-radius:20px;font-size:.96rem;line-height:1.4;overflow-wrap:anywhere}
+  .msg.agent{align-self:flex-start}
+  .msg.agent .bubble{background:var(--deep);color:var(--white);border-bottom-left-radius:6px}
+  .msg.user{align-self:flex-end;align-items:flex-end}
+  .msg.user .bubble{background:var(--green);color:var(--black);border-bottom-right-radius:6px}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}}
+  @media (prefers-reduced-motion:reduce){.msg{animation:none}.live::before{animation:none!important}.transcript{scroll-behavior:auto}}
+
+  /* ---------- Call dock (Cognigy widget is moved in here) ---------- */
+  .dock{flex:none;background:var(--mint);padding:14px 16px 26px;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:120px;justify-content:center;position:relative}
+  .dock-hint{font-size:.8125rem;color:var(--deep);text-align:center;font-weight:600;margin-top:20px}
+  .home-bar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:128px;height:5px;border-radius:5px;background:var(--black)}
+
+  .dock [class*="widget_container"],
+  .dock [class*="widget_outer_wrapper"],
+  .dock [class*="widget_wrapper"]{position:static!important;inset:auto!important;transform:none!important;margin:0!important;width:100%!important;max-width:100%!important;box-shadow:none!important;background:transparent!important}
+  .dock button:focus-visible{outline:3px solid var(--purple);outline-offset:3px}
+  .phone.own-transcript .dock [class*="transcript"]{display:none!important}
+
+  /* ---------- Mobile ---------- */
+  @media (max-width:900px){
+    .page{display:block}
+    .field-left{padding:24px 20px 40px;gap:36px}
+    h1{font-size:clamp(3rem,17vw,5.5rem)}
+    .field-right{padding:32px 16px 40px}
+    .phone{max-height:none;height:min(800px,calc(100svh - 24px))}
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="field-left" aria-label="wave-versicherung">
+    <div class="brand">
+      <span class="tile"><img src="logo.png" alt=""></span>
+      <span>wave-versicherung</span>
+    </div>
+
+    <div>
+      <h1>Einfach<br>sprechen.<br><em>AVA hört zu.</em></h1>
+      <p class="lead">Schaden melden, Vertrag prüfen, Fragen klären: ein Klick, und AVA ist am Apparat. Direkt im Browser, ohne Warteschleife.</p>
+    </div>
+
+    <div class="legend" aria-label="Legende der Transkription">
+      <span><i class="a"></i>AVA (Agentin)</span>
+      <span><i class="u"></i>Sie</span>
+    </div>
+  </section>
+
+  <section class="field-right" aria-label="Telefonvorschau">
+    <div class="phone" id="phone" data-state="idle">
+      <div class="screen">
+        <div class="island" aria-hidden="true"></div>
+        <div class="statusbar" aria-hidden="true">
+          <span id="clock">9:41</span>
+          <span class="icons">
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M1.5 4.2a10 10 0 0114 0M4 7a6.4 6.4 0 019 0"/><circle cx="8.5" cy="10" r="1.2" fill="#fff" stroke="none"/></svg>
+            <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="22" height="12" rx="3.5" stroke="#fff" opacity=".6"/><rect x="2" y="2" width="19" height="9" rx="2.2" fill="#fff"/><rect x="24" y="4.5" width="2" height="4" rx="1" fill="#fff" opacity=".6"/></svg>
+          </span>
+        </div>
+
+        <header class="app-head">
+          <div class="avatar" aria-hidden="true"><img src="logo.png" alt=""></div>
+          <div>
+            <h2>AVA</h2>
+            <p>wave-versicherung · Service</p>
+          </div>
+          <span class="live" id="stateLabel" role="status" aria-live="polite">Bereit</span>
+        </header>
+
+        <div class="transcript" id="transcript" role="log" aria-live="polite" aria-label="Live-Transkription">
+          <div class="empty" id="empty"><strong>Tippen Sie auf den Anruf-Button.</strong>Das Gespräch erscheint hier live. AVA in Dunkelviolett, Sie in Grün.</div>
+        </div>
+
+        <footer class="dock" id="dock">
+          <p class="dock-hint" id="hint">Mikrofon-Freigabe erforderlich</p>
+          <div class="home-bar" aria-hidden="true"></div>
+        </footer>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Cognigy Click-to-Call widget -->
+<script src="https://github.com/Cognigy/click-to-call-widget/releases/latest/download/webRTCWidget.js"></script>
+<script>
+(function(){
+  var ENDPOINT = "https://endpoint-trial.cognigy.ai/8e258fbd5273a8a5fa6e0d7eccd2f8b0fc3e594bdcb0ee67d1a29861ef0a2df8";
+
+  var phone = document.getElementById("phone");
+  var log = document.getElementById("transcript");
+  var empty = document.getElementById("empty");
+  var dock = document.getElementById("dock");
+  var hint = document.getElementById("hint");
+  var stateLabel = document.getElementById("stateLabel");
+
+  function tick(){ var d=new Date(); document.getElementById("clock").textContent = d.getHours()+":"+String(d.getMinutes()).padStart(2,"0"); }
+  tick(); setInterval(tick, 30000);
+
+  function setState(s, label){ phone.dataset.state = s; stateLabel.textContent = label; }
+
+  var last = null;
+  function addMessage(role, text){
+    text = (text||"").trim(); if(!text) return;
+    if(empty){ empty.remove(); empty = null; }
+    phone.classList.add("own-transcript");
+    if(last && last.role === role && Date.now() - last.t < 4000){
+      last.bubble.textContent += " " + text; last.t = Date.now();
+    } else {
+      var m = document.createElement("div"); m.className = "msg " + role;
+      var w = document.createElement("span"); w.className = "who"; w.textContent = role === "agent" ? "AVA" : "Sie";
+      var b = document.createElement("div"); b.className = "bubble"; b.textContent = text;
+      m.append(w,b); log.appendChild(m);
+      last = {role:role, bubble:b, t:Date.now()};
+    }
+    log.scrollTop = log.scrollHeight;
+  }
+  window.waveAddMessage = addMessage;
+
+  function findTranscription(o, depth){
+    if(!o || depth > 5) return null;
+    if(typeof o === "string"){ try{ o = JSON.parse(o); }catch(e){ return null; } }
+    if(typeof o !== "object") return null;
+    if(o._transcription) return o._transcription;
+    for(var k in o){ var r = findTranscription(o[k], depth+1); if(r) return r; }
+    return null;
+  }
+  function handleTranscription(t){
+    if(!t) return;
+    var role = (t.originator === "user") ? "user" : "agent";
+    var msgs = Array.isArray(t.messages) ? t.messages : [t];
+    msgs.forEach(function(m){ addMessage(role, m && (m.text || m.transcript || (typeof m === "string" ? m : ""))); });
+  }
+
+  function adoptWidget(){
+    var els = document.querySelectorAll("[class*='widget_container'], [class*='widget_wrapper']");
+    els.forEach(function(el){
+      if(dock.contains(el)) return;
+      var top = el; while(top.parentElement && top.parentElement !== document.body && top.parentElement !== dock) top = top.parentElement;
+      dock.insertBefore(top, hint);
+    });
+  }
+  new MutationObserver(adoptWidget).observe(document.body, {childList:true});
+
+  addEventListener("load", function(){
+    if(typeof window.initWebRTCWidget !== "function"){
+      hint.textContent = "Widget konnte nicht geladen werden. Bitte Seite neu laden.";
+      setState("idle","Offline");
+      return;
+    }
+    var p = window.initWebRTCWidget(ENDPOINT);
+    setTimeout(adoptWidget, 300); setTimeout(adoptWidget, 1200);
+    if(p && typeof p.then === "function"){
+      p.then(function(widget){
+        adoptWidget();
+        if(!widget || typeof widget.on !== "function") return;
+        widget.on("newRTCSession", function(session){
+          setState("connecting","Verbinde …");
+          var live = function(){ setState("live","Live"); hint.textContent = "Gespräch läuft"; };
+          session.on("accepted", live); session.on("confirmed", live);
+          session.on("newInfo", function(ev){
+            if(ev.originator !== "remote") return;
+            var info = ev.info || ev;
+            var body = info && (info.body !== undefined ? info.body : info.request && info.request.body);
+            if(body === undefined && typeof ev.body !== "undefined") body = ev.body;
+            handleTranscription(findTranscription(body, 0));
+          });
+          var end = function(){ setState("idle","Beendet"); hint.textContent = "Gespräch beendet. Erneut anrufen?"; };
+          session.on("ended", end); session.on("terminated", end); session.on("failed", end);
+        });
+      }).catch(function(e){ console.error("Widget init failed", e); hint.textContent = "Verbindung zum Widget fehlgeschlagen."; });
+    }
+  });
+
+  /* add #demo to the URL to preview a sample conversation (no call is made) */
+  if(/demo/.test(location.hash)){
+    [["agent","Guten Tag, hier ist AVA von wave-versicherung. Wie kann ich helfen?"],
+     ["user","Hallo, ich möchte einen Wasserschaden in meiner Wohnung melden."],
+     ["agent","Das tut mir leid. Ist die Situation aktuell sicher, und wann ist der Schaden aufgetreten?"],
+     ["user","Ja, alles sicher. Es ist heute Morgen passiert."]
+    ].forEach(function(d,i){ setTimeout(function(){ last=null; addMessage(d[0],d[1]); }, 400+i*500); });
+    setState("live","Demo");
+  }
+})();
+</script>
+</body>
+</html>
