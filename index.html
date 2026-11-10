@@ -29,18 +29,24 @@
 
   /* ---------- Page ---------- */
   .page{min-height:100svh;display:grid;grid-template-columns:repeat(12,1fr)}
-  .field-left{grid-column:1 / span 7;background:var(--purple);color:var(--white);padding:clamp(24px,4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:48px}
+  .field-left{grid-column:1 / span 7;background:var(--white);color:var(--black);padding:clamp(24px,4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:40px}
   .field-right{grid-column:8 / span 5;background:var(--mint);display:grid;place-items:center;padding:32px 24px}
-  .brand{display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-weight:700;font-size:1.75rem;letter-spacing:-.04em;line-height:1}
-  .brand .tile{width:52px;height:52px;border-radius:14px;background:var(--white);display:grid;place-items:center;flex:none}
-  .brand img{width:34px;height:auto;display:block}
-  h1{font-family:var(--font-display);font-weight:700;font-size:clamp(3rem,8vw,8rem);line-height:.88;letter-spacing:-.04em;text-wrap:balance}
-  h1 em{font-style:normal;color:var(--green)}
-  .lead{max-width:34ch;font-size:clamp(1.125rem,1rem + .5vw,1.4rem);margin-top:28px;text-wrap:pretty}
-  .legend{display:flex;gap:28px;flex-wrap:wrap;font-weight:600;font-size:.95rem}
-  .legend span{display:inline-flex;align-items:center;gap:10px}
-  .legend i{width:16px;height:16px;border-radius:50%;display:inline-block;outline:2px solid var(--white)}
-  .legend .a{background:var(--deep)} .legend .u{background:var(--green)}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:700;font-size:1.6rem;letter-spacing:-.04em;line-height:1;color:var(--purple)}
+  .brand .tile{width:46px;height:46px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:none}
+  .brand img{width:30px;height:auto;display:block}
+  .tag{font-size:.95rem;color:var(--muted);font-weight:600}
+  h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.8rem,5.6vw,5.6rem);line-height:.92;letter-spacing:-.04em;text-wrap:balance;color:var(--deep)}
+  h1 em{font-style:normal;color:var(--purple)}
+  .lead{max-width:42ch;font-size:clamp(1.125rem,1rem + .45vw,1.35rem);margin-top:22px;text-wrap:pretty}
+  .steps{list-style:none;padding:0;display:grid;gap:18px;max-width:46ch;margin-top:30px}
+  .steps li{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;font-size:1.125rem;line-height:1.4}
+  .steps b{width:44px;height:44px;border-radius:50%;background:var(--purple);color:var(--white);display:grid;place-items:center;font-family:var(--font-display);font-size:1.2rem;font-variant-numeric:tabular-nums}
+  .note{font-size:.95rem;color:var(--muted);max-width:52ch;text-wrap:pretty}
+  .legend{display:flex;gap:24px;flex-wrap:wrap;font-weight:600;font-size:.92rem;margin-top:6px}
+  .legend span{display:inline-flex;align-items:center;gap:9px}
+  .legend i{width:16px;height:16px;border-radius:50%;display:inline-block}
+  .legend .a{background:var(--deep)} .legend .u{background:var(--green);outline:1px solid #0b6b36}
 
   /* ---------- iPhone ---------- */
   .phone{position:relative;width:min(390px,100%);aspect-ratio:390/800;max-height:calc(100svh - 48px);background:#111;border-radius:58px;padding:12px;
@@ -55,52 +61,40 @@
 
   .view{position:absolute;inset:0}
 
-  /* ---------- Home ---------- */
-  .home{background:var(--purple);overflow:hidden;padding:64px 18px 0;display:flex;flex-direction:column;color:var(--white);
+  /* ---------- Start screen ---------- */
+  .home{background:var(--deep);overflow:hidden;padding:104px 28px 54px;display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--white);
         transition:transform .26s var(--ease-out),opacity .22s ease,filter .26s ease,visibility 0s}
   .wp{position:absolute;inset:0;z-index:-1;pointer-events:none}
-  .wp .c1{position:absolute;width:420px;height:420px;border-radius:50%;background:var(--deep);left:-170px;bottom:-130px}
-  .wp .c2{position:absolute;width:150px;height:150px;border-radius:50%;background:var(--green);right:-40px;top:250px}
-  .wp .c3{position:absolute;width:90px;height:90px;border-radius:50%;background:var(--mint);right:78px;bottom:140px}
-  .date{font-weight:600;font-size:.95rem;text-align:center}
-  .time{font-family:var(--font-display);font-weight:700;font-size:4.2rem;letter-spacing:-.05em;line-height:.9;text-align:center;margin:2px 0 18px;font-variant-numeric:tabular-nums}
+  .wp .r1,.wp .r2{position:absolute;border-radius:50%;left:50%;top:162px;transform:translate(-50%,-50%);background:var(--purple)}
+  .wp .r1{width:430px;height:430px;opacity:.38}
+  .wp .r2{width:290px;height:290px;opacity:.7}
+  .wp .dot{position:absolute;width:28px;height:28px;border-radius:50%;background:var(--green);right:46px;top:112px}
+  .mark{width:116px;height:116px;border-radius:34px;background:var(--white);display:grid;place-items:center;box-shadow:0 18px 40px -16px rgba(0,0,0,.55)}
+  .mark img{width:74px;height:auto;display:block}
+  .home h2{font-family:var(--font-display);font-weight:700;font-size:2.6rem;letter-spacing:-.04em;line-height:1;margin-top:34px}
+  .home .tagline{font-size:.98rem;color:var(--mint);margin-top:8px;text-wrap:balance}
+  .spacer{flex:1}
+  .callwrap{display:flex;flex-direction:column;align-items:center;gap:22px}
+  .fab{position:relative;width:92px;height:92px;border-radius:50%;background:var(--green);color:var(--black);display:grid;place-items:center;box-shadow:0 14px 34px -10px rgba(4,240,106,.55)}
+  .fab svg{width:38px;height:38px;position:relative;z-index:1;transition:transform .3s var(--ease-out)}
+  .fab::before,.fab::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--green);opacity:0}
+  .home:not(.is-loading) .fab::before{animation:pulse 2.4s var(--ease-out) infinite}
+  .home:not(.is-loading) .fab::after{animation:pulse 2.4s var(--ease-out) .8s infinite}
+  @keyframes pulse{0%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(1.75)}}
+  .fab[disabled]{opacity:.5;cursor:progress;box-shadow:none}
+  .callcap{font-size:.95rem;color:var(--mint);font-weight:600}
 
   /* entrance: short stagger, transform + opacity only */
-  .reveal{opacity:0;transform:translateY(10px);animation:rise .42s var(--ease-out) forwards;animation-delay:calc(var(--i,0) * 60ms)}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .42s var(--ease-out) forwards;animation-delay:calc(var(--i,0) * 70ms)}
   @keyframes rise{to{opacity:1;transform:none}}
 
-  .widget{background:var(--white);color:var(--black);border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 30px -14px rgba(0,0,0,.45)}
-  .widget .row{display:flex;align-items:center;gap:12px}
-  .widget .logo{width:46px;height:46px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:none}
-  .widget .logo img{width:30px;height:auto;display:block}
-  .widget h2{font-family:var(--font-display);font-weight:700;font-size:1.3rem;letter-spacing:-.03em;line-height:1;color:var(--deep)}
-  .widget small{display:block;font-size:.8rem;color:var(--muted)}
-  .widget p{font-size:.92rem;line-height:1.35;text-wrap:pretty}
-
   .press{transition:transform .16s var(--ease-out),filter .16s ease,background-color .16s ease,opacity .16s ease}
-  .press:active:not([disabled]){transform:scale(.97)}
-  .callbtn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px;border-radius:99px;background:var(--green);color:var(--black);font-weight:600;font-size:1rem;width:100%}
-  .callbtn[disabled]{opacity:.55;cursor:progress}
-  .callbtn svg{transition:transform .3s var(--ease-out)}
+  .press:active:not([disabled]){transform:scale(.95)}
   @media (hover:hover) and (pointer:fine){
-    .callbtn:hover:not([disabled]){filter:brightness(.95)}
-    .callbtn:hover:not([disabled]) svg{transform:rotate(-12deg)}
-    .dock button.ico:hover:not([disabled]){transform:translateY(-2px)}
+    .fab:hover:not([disabled]){filter:brightness(.95)}
+    .fab:hover:not([disabled]) svg{transform:rotate(-12deg)}
     .ctl:hover b{filter:brightness(.96)}
   }
-
-  .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 8px;margin-top:22px}
-  .app{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.7rem;font-weight:600;text-align:center;cursor:default}
-  .app i{width:56px;height:56px;border-radius:15px;display:grid;place-items:center}
-  .app svg{width:28px;height:28px}
-  .a1{background:var(--white);color:var(--purple)} .a2{background:var(--mint);color:var(--deep)} .a3{background:var(--green);color:var(--black)} .a4{background:var(--deep);color:var(--white)}
-
-  .dock{position:absolute;left:12px;right:12px;bottom:26px;height:84px;border-radius:30px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:space-around;padding:0 10px}
-  .dock .ico{width:58px;height:58px;border-radius:16px;display:grid;place-items:center}
-  .dock .ico[disabled]{opacity:.6;cursor:progress}
-  .dock svg{width:30px;height:30px}
-  .ico.phone{background:var(--green);color:var(--black)} .ico.ava{background:var(--white)} .ico.ava img{width:34px;height:auto}
-  .ico.chat{background:var(--mint);color:var(--deep);cursor:default} .ico.web{background:var(--deep);color:var(--white);cursor:default}
 
   /* ---------- Call / conversation ---------- */
   .call{background:var(--deep);color:var(--white);display:flex;flex-direction:column;padding-top:56px;border-radius:46px;
@@ -172,13 +166,26 @@
 <body>
 <main class="page">
   <section class="field-left" aria-label="wave-versicherung">
-    <div class="brand"><span class="tile"><img src="logo.png" alt=""></span><span>wave-versicherung</span></div>
-    <div>
-      <h1>Einfach<br>sprechen.<br><em>AVA hört zu.</em></h1>
-      <p class="lead">Schaden melden, Vertrag prüfen, Fragen klären: ein Tipp, und AVA ist am Apparat. Direkt im Browser, ohne Warteschleife.</p>
+    <div class="top">
+      <div class="brand"><span class="tile"><img src="logo.png" alt=""></span><span>wave-versicherung</span></div>
+      <span class="tag">Anruf-Simulation</span>
     </div>
-    <div class="legend" aria-label="Legende der Transkription">
-      <span><i class="a"></i>AVA (Agentin)</span><span><i class="u"></i>Sie</span>
+
+    <div>
+      <h1>Rufen Sie AVA an. <em>Direkt hier.</em></h1>
+      <p class="lead">Bei Schaden oder Fragen zum Vertrag ist AVA immer für Sie da. Probieren Sie es aus: Das Telefon rechts startet einen echten Sprachanruf in Ihrem Browser.</p>
+      <ol class="steps">
+        <li><b>1</b><span>Tippen Sie auf den grünen Hörer.</span></li>
+        <li><b>2</b><span>Erlauben Sie den Zugriff auf Ihr Mikrofon.</span></li>
+        <li><b>3</b><span>Sprechen Sie mit AVA. Das Gespräch erscheint live als Text: AVA in Dunkelviolett, Sie in Grün.</span></li>
+      </ol>
+    </div>
+
+    <div>
+      <div class="legend" aria-label="Legende der Transkription">
+        <span><i class="a"></i>AVA (Assistentin)</span><span><i class="u"></i>Sie</span>
+      </div>
+      <p class="note" style="margin-top:14px">Demo-Seite. Das Gespräch führt der Sprachassistent der Testumgebung, es entsteht kein Versicherungsfall.</p>
     </div>
   </section>
 
@@ -195,38 +202,18 @@
           </span>
         </div>
 
-        <!-- HOME -->
-        <div class="view home" id="home">
-          <div class="wp" aria-hidden="true"><span class="c1"></span><span class="c2"></span><span class="c3"></span></div>
-          <div class="date reveal" id="date" style="--i:0">Dienstag, 10. November</div>
-          <div class="time reveal" id="bigtime" style="--i:1">9:41</div>
-
-          <div class="widget reveal" style="--i:2">
-            <div class="row">
-              <span class="logo"><img src="logo.png" alt=""></span>
-              <div><h2>AVA</h2><small>Sprachassistentin · wave-versicherung</small></div>
-            </div>
-            <p>Schaden melden, Vertrag prüfen oder Fragen klären. AVA hilft sofort.</p>
-            <button class="callbtn press" id="callBtn" type="button" disabled>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.58a1 1 0 01-.25 1z"/></svg>
-              <span id="callLabel">Wird geladen …</span>
-            </button>
-          </div>
-
-          <div class="apps reveal" style="--i:3" aria-hidden="true">
-            <div class="app"><i class="a1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></i>Verträge</div>
-            <div class="app"><i class="a2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 4 6 6.5 6 10a6 6 0 01-12 0c0-3.5 3-6 6-10z"/></svg></i>Schaden</div>
-            <div class="app"><i class="a3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></i>Dokumente</div>
-            <div class="app"><i class="a4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></i>Profil</div>
-          </div>
-
-          <div class="dock reveal" style="--i:4">
-            <button class="ico phone press" id="dockPhone" type="button" aria-label="AVA anrufen" disabled>
+        <!-- START -->
+        <div class="view home is-loading" id="home">
+          <div class="wp" aria-hidden="true"><span class="r1"></span><span class="r2"></span><span class="dot"></span></div>
+          <div class="mark reveal" style="--i:0"><img src="logo.png" alt=""></div>
+          <h2 class="reveal" style="--i:1">AVA</h2>
+          <p class="tagline reveal" style="--i:2">Sprachassistentin von wave-versicherung<br>Schaden &amp; Vertrag · 24/7</p>
+          <div class="spacer"></div>
+          <div class="callwrap reveal" style="--i:3">
+            <button class="fab press" id="callBtn" type="button" aria-label="AVA anrufen" disabled>
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.58a1 1 0 01-.25 1z"/></svg>
             </button>
-            <button class="ico ava press" id="dockAva" type="button" aria-label="AVA öffnen" disabled><img src="logo.png" alt=""></button>
-            <span class="ico chat" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg></span>
-            <span class="ico web" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span>
+            <span class="callcap" id="callLabel">Wird geladen …</span>
           </div>
         </div>
 
@@ -273,7 +260,7 @@
 
   var $ = function(id){ return document.getElementById(id); };
   var screen = $("screen"), log = $("transcript"), empty = $("empty");
-  var callBtn = $("callBtn"), callLabel = $("callLabel"), dockPhone = $("dockPhone"), dockAva = $("dockAva");
+  var callBtn = $("callBtn"), callLabel = $("callLabel"), home = $("home");
   var callStatus = $("callStatus"), muteBtn = $("muteBtn"), muteLabel = $("muteLabel"), endBtn = $("endBtn");
   var host = $("widgetHost");
   var EMPTY_HTML = '<div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><strong>AVA hört zu.</strong>Sprechen Sie einfach los. Das Gespräch erscheint hier live.';
@@ -281,8 +268,7 @@
   /* ----- clock & date ----- */
   function tick(){
     var d = new Date(), t = d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");
-    $("clock").textContent = t; $("bigtime").textContent = t;
-    $("date").textContent = d.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long"});
+    $("clock").textContent = t;
   }
   tick(); setInterval(tick, 15000);
 
@@ -292,10 +278,10 @@
 
   function setState(s){ screen.dataset.state = s; }
   function setReady(){
-    if(ready && !DEMO && callBtn.disabled === false) return;
+    if(!callBtn.disabled) return;
     ready = true;
-    [callBtn,dockPhone,dockAva].forEach(function(b){ b.disabled = false; });
-    callLabel.textContent = "AVA anrufen";
+    callBtn.disabled = false; home.classList.remove("is-loading");
+    callLabel.textContent = "Zum Anrufen tippen";
   }
   if(DEMO) setTimeout(setReady, 50);
 
@@ -409,7 +395,7 @@
     setMuted(next);
   }
 
-  [callBtn,dockPhone,dockAva].forEach(function(b){ b.addEventListener("click", startCall); });
+  callBtn.addEventListener("click", startCall);
   endBtn.addEventListener("click", endCall);
   muteBtn.addEventListener("click", toggleMute);
 
